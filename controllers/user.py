@@ -1,5 +1,6 @@
 from models.user import User
 from typing import List
+import bson
 
 
 def add_user(username) -> User:
@@ -13,3 +14,8 @@ def get_users() -> List[User]:
     users = User.objects().all()
 
     return users
+
+def get_user(user_id) -> User:
+    user = User.objects(id=user_id).first()
+
+    return user

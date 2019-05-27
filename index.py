@@ -1,7 +1,7 @@
 from flask import Flask, request
 from flask_restful import Resource, Api
 import mongo_setup as mongo_setup
-from controllers.user import add_user
+from controllers.user import add_user, get_users
 
 mongo_setup.global_init()
 
@@ -16,6 +16,16 @@ class UserRoute(Resource):
             'username': user.username,
             'id': str(user.id)
         }}, 201
+    
+    def get(self):
+        users = get_users()
+        usersJson = []
+        for user in users:
+            usersJson.append({
+                'username': user.username,
+                'id': str(user.id)
+            })
+        return {'users':usersJson}, 200
 
 api.add_resource(UserRoute, '/users')
 
